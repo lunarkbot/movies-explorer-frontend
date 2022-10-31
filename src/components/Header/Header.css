@@ -1,5 +1,9 @@
 .header {
-  background-color: #dddee3;
+  background-color: var(--background-default);
+}
+
+.main .header {
+  background-color: var(--background-second);
 }
 
 .header__content {

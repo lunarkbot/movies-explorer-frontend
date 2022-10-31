@@ -1,0 +1,15 @@
+.movies {
+  display: grid;
+  grid-template-rows: 74px 1fr 172px;
+  min-height: 100vh;
+}
+
+.movies__content {
+  background-color: var(--background-default);
+}
+
+@media screen and (max-width: 767px) {
+  .movies {
+    grid-template-rows: 74px 1fr 243px;
+  }
+}

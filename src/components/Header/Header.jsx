@@ -4,13 +4,14 @@ import Logo from '../UI/Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import { switchLogin } from '../../store/userSlice';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import Hamburger from '../UI/Hamburger/Hamburger';
 
 export const Header = () => {
   const { isLoggedIn } = useSelector(state => state.user);
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,8 +20,13 @@ export const Header = () => {
     console.log(isOpen)
   }
 
-  function handleClick () {
-    dispatch(switchLogin());
+  function handleSignInClick () {
+    //dispatch(switchLogin());
+    history('/signin');
+  }
+
+  function handleButtonUserClick() {
+    history('/profile');
   }
 
   return (
@@ -32,6 +38,7 @@ export const Header = () => {
               <Navigation />
               <Button
                 className="header__button-user"
+                onClick={handleButtonUserClick}
               >
                 <span>Аккаунт</span>
               </Button>
@@ -46,7 +53,7 @@ export const Header = () => {
               <Link to={'/signup'} className="header__link">Регистрация</Link>
               <Button
                 className="header__button-login"
-                onClick={handleClick}
+                onClick={handleSignInClick}
               >
                 Войти
               </Button>

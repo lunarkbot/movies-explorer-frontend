@@ -9,7 +9,7 @@ import {AboutMe} from '../../components/AboutMe/AboutMe';
 
 export const MainPage = () => {
   return (
-    <main className="main">
+    <div className="main">
       <Header />
       <main>
         <Promo />
@@ -18,6 +18,6 @@ export const MainPage = () => {
         <AboutMe />
       </main>
       <Footer />
-    </main>
+    </div>
   );
 };

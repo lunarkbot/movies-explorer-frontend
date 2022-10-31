@@ -14,5 +14,9 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  background-color: var(--background-default);
+}
+
+.main .logo::before {
   background-color: var(--background-second);
 }
