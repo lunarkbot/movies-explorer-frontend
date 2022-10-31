@@ -1,7 +1,9 @@
 .movies {
   display: grid;
-  grid-template-rows: 74px 1fr 172px;
+  grid-template-rows: 70px 1fr 172px;
   min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .movies__content {

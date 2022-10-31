@@ -4,13 +4,14 @@ import './Button.css';
 const Button = ({
                   className = '',
                   onClick,
-                  children
+                  children,
+                  type = 'button'
                 }) => {
   return (
     <button
       className={`button ${className}`}
       onClick={onClick}
-      type="button"
+      type={type}
     >
       {children}
     </button>
