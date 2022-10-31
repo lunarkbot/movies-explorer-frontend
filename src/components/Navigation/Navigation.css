@@ -25,7 +25,7 @@
   font-weight: 500;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
   .navigation__list {
     gap: 28px;
   }
@@ -61,7 +61,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .navigation__list {
     gap: 24px;
   }

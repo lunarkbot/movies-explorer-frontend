@@ -92,9 +92,9 @@
   background-size: cover;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
   .header__content {
-    padding: 0 50px;
+    padding: 0 30px;
     max-width: 100%;
     overflow: hidden;
   }
@@ -138,7 +138,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .header__content {
     padding: 0 18px;
   }

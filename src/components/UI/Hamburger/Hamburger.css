@@ -52,13 +52,13 @@
   transform: translateY(-10px) rotateZ(-45grad);
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
   .hamburger {
     display: flex;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .hamburger_active {
     right: 13px;
     top: 13px;

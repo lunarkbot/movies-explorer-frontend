@@ -1,0 +1,110 @@
+.about-project {
+  background-color: var(--background-default);
+}
+
+.about-project__content {
+  padding: 110px 70px 110px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.about-project__heading {
+  margin: 0 0 70px;
+}
+
+.about-project__info {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 110px;
+}
+
+.about-project__info-heading {
+  font: 400 20px/24px 'Inter', sans-serif;
+  color: var(--text-default);
+  margin: 0 0 26px;
+  letter-spacing: -0.04em;
+}
+
+.about-project__info-text {
+  font: 400 14px/20px 'Inter', sans-serif;
+  color: var(--text-default);
+  margin: 0;
+}
+
+.about-project__timeline {
+  display: grid;
+  grid-template-columns: 228px 1fr;
+  grid-template-rows: 36px 36px;
+  font: 400 14px/17px 'Inter', sans-serif;
+}
+
+.about-project__timeline-first-week {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--input-default);
+  color: var(--text-second);
+}
+
+.about-project__timeline-weeks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  color: var(--text-default);
+}
+
+.about-project__timeline-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-third);
+}
+
+@media screen and (max-width: 1279px) {
+  .about-project__content {
+    padding: 90px 50px 90px;
+  }
+
+  .about-project__info {
+    gap: 30px;
+    margin-bottom: 93px;
+  }
+
+  .about-project__timeline {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-project__content {
+    min-height: auto;
+    padding: 70px 18px 70px;
+  }
+
+  .about-project__heading {
+    margin: 0 0 60px;
+  }
+
+  .about-project__info {
+    flex-direction: column;
+    gap: 56px;
+    margin-bottom: 60px;
+  }
+
+  .about-project__info-heading {
+    font: 400 18px/22px 'Inter', sans-serif;
+    margin: 0 0 16px;
+  }
+
+  .about-project__info-text {
+    font: 400 11px/16px 'Inter', sans-serif;
+  }
+
+  .about-project__timeline {
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 35px 35px;
+    font: 400 11px/13px 'Inter', sans-serif;
+  }
+}

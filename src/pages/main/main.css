@@ -4,7 +4,7 @@
   min-height: 100vh;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .main {
     grid-template-rows: 74px 1fr 243px;
   }

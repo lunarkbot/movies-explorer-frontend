@@ -45,20 +45,20 @@
 }
 
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
   .footer__content {
     padding: 0 50px;
     max-width: 100%;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .footer {
     background-color: var(--background-default);
   }
 
   .footer__content {
-    padding: 0 18px;
+    padding: 0 10px;
   }
 
   .footer__text {
