@@ -1,3 +1,6 @@
+# Figma
+https://disk.yandex.ru/d/cxMV18w2LnSrVQ
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
