@@ -64,8 +64,10 @@
     grid-template-rows: auto auto 1fr auto;
   }
 
-  .signin__group {
+  .signin__inputs-group {
     width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 40px;
   }
 
   .signin__buttons-group {
@@ -78,9 +80,5 @@
 
   .signin__title {
     margin: 0 0 80px;
-  }
-
-  .signin__inputs-group {
-    margin-bottom: 0;
   }
 }
