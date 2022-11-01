@@ -60,11 +60,3 @@
 .movies-card__ico-delete {
   background-image: url('../../images/delete.svg');
 }
-
-@media screen and (max-width: 1279px) {
-
-}
-
-@media screen and (max-width: 767px) {
-
-}

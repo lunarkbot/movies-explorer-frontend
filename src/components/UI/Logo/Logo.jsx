@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Logo.css';
 
-const Logo = () => {
+const Logo = ({ secondClass = '' }) => {
   return (
-    <Link to={'/'} className="logo" title="Logo" />
+    <Link to={'/'} className={`logo ${secondClass}`} title="Logo" />
   );
 };
 

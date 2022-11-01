@@ -1,0 +1,39 @@
+.my-input {
+  display: block;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.my-input__input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 32px;
+  padding: 5px 0 6px;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #ebebeb;
+  font: 400 14px/17px 'Inter', sans-serif;
+}
+
+.my-input__input_has-error {
+  color: var(--input-error);
+}
+
+.my-input__input:focus {
+  border-color: var(--input-default);
+}
+
+.my-input__label {
+  display: block;
+  font: 400 10px/12px 'Inter', sans-serif;
+  color: var(--text-third);
+}
+
+.my-input__error {
+  display: block;
+  color: var(--input-error);
+  font: 400 10px/12px 'Inter', sans-serif;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+}
