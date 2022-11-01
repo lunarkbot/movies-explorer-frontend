@@ -1,5 +1,7 @@
 # Figma
-https://disk.yandex.ru/d/cxMV18w2LnSrVQ
+Download: https://disk.yandex.ru/d/cxMV18w2LnSrVQ
+
+Or just open: https://www.figma.com/proto/GQPmgK9cQ9JZW7bBXPQJu9/Diploma-(Copy)?node-id=932%3A2618
 
 # Getting Started with Create React App
 
