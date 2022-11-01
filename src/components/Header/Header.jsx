@@ -9,7 +9,9 @@ import Button from '../UI/Button/Button';
 import Hamburger from '../UI/Hamburger/Hamburger';
 
 export const Header = () => {
-  const { isLoggedIn } = useSelector(state => state.user);
+  //const { isLoggedIn } = useSelector(state => state.user);
+  const isLoggedIn = true;
+
   const dispatch = useDispatch();
   const history = useNavigate();
 
