@@ -2,11 +2,12 @@ import './profile.css';
 import {Header} from '../../components/Header/Header';
 import {Footer} from '../../components/Footer/Footer';
 import {MyInput} from '../../components/UI/MyInput/MyInput';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Button from '../../components/UI/Button/Button';
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {switchLogin} from '../../store/userSlice';
+import {useFormAndValidation} from '../../hooks/useFormAndValidation';
 
 export const ProfilePage = () => {
   const user = {
@@ -16,12 +17,21 @@ export const ProfilePage = () => {
 
   const dispatch = useDispatch();
   const history = useNavigate();
-
+  const {values, handleChange, errors, isValid, setValues } = useFormAndValidation();
   const [isEditable, setIsEditable] = useState(false);
+
+  useEffect(() => {
+    setValues({
+      email: 'pochta@yandex.ru',
+      name: 'Виталий',
+    });
+  }, [setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsEditable(false);
+    if (isValid) {
+      setIsEditable(false);
+    }
   }
 
   function handleEdit(e) {
@@ -45,12 +55,20 @@ export const ProfilePage = () => {
             <MyInput
               name="name"
               placeholder="Имя"
-              value={user.name}
+              handler={handleChange}
+              min="2"
+              max="30"
+              errorText={errors.name}
+              value={values.name}
             />
             <MyInput
               name="email"
               placeholder="E-mail"
-              value={user.email}
+              handler={handleChange}
+              min="2"
+              max="30"
+              value={values.email}
+              errorText={errors.email}
             />
           </div>)
           : (<ul className="profile__list">

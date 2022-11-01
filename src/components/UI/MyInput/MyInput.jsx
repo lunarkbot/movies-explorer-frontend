@@ -6,15 +6,12 @@ export const MyInput = ({
                         name,
                         placeholder,
                         value = '',
-                        hasError = false,
+                        handler,
+                        min,
+                        max,
+                        required = true,
                         errorText = '',
                       }) => {
-
-  const [inputValue, setInputValue] = useState(value);
-
-  function handleInput(e) {
-    setInputValue(e.target.value);
-  }
 
   return (
     <label className="my-input">
@@ -22,11 +19,14 @@ export const MyInput = ({
       <input
         type={type}
         name={name}
-        onInput={handleInput}
-        value={inputValue}
-        className={`my-input__input ${hasError && 'my-input__input_has-error'}`}
+        onInput={handler}
+        value={value}
+        minLength={min}
+        maxLength={max}
+        required={required}
+        className={`my-input__input ${errorText && 'my-input__input_has-error'}`}
       />
-      {hasError && <span className="my-input__error">{errorText}</span>}
+      {errorText && <span className="my-input__error">{errorText}</span>}
     </label>
   );
 };
