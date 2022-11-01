@@ -1,0 +1,122 @@
+.about-me {
+  background-color: var(--background-default);
+}
+
+.about-me__content {
+  padding: 110px 70px 125px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.about-me__heading {
+  margin: 0 0 66px;
+}
+
+.about-me__profile {
+  display: flex;
+  align-items: stretch;
+  gap: 270px;
+  margin-bottom: 100px;
+}
+
+.about-me__info {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.about-me__subheading {
+  margin: 0 0 18px;
+  font: 400 50px/58px 'Inter', sans-serif;
+  letter-spacing: -0.04em;
+  color: var(--text-default);
+}
+
+.about-me__prof {
+  margin: 0 0 26px;
+  font: 500 18px/20px 'Inter', sans-serif;
+  color: var(--text-default);
+}
+
+.about-me__text {
+  margin: 0;
+  font: 400 14px/22px 'Inter', sans-serif;
+  color: var(--text-default);
+}
+
+.about-me__link {
+  font: 500 14px/17px 'Inter', sans-serif;
+  color: var(--text-default);
+  text-decoration: none;
+}
+
+.about-me__photo {
+  width: 270px;
+  display: block;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 1279px) {
+  .about-me__content {
+    padding: 90px 50px 90px;
+  }
+
+  .about-me__profile {
+    gap: 49px;
+    margin-bottom: 90px;
+  }
+
+  .about-me__subheading {
+    margin: 0 0 16px;
+    font: 400 40px/40px 'Inter', sans-serif;
+  }
+
+  .about-me__prof {
+    margin: 0 0 20px;
+    font: 500 12px/18px 'Inter', sans-serif;
+  }
+
+  .about-me__text {
+    font: 400 12px/18px 'Inter', sans-serif;
+  }
+
+  .about-me__photo {
+    width: 255px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-me__content {
+    padding: 70px 14px 70px;
+  }
+
+  .about-me__heading {
+    margin-bottom: 60px;
+  }
+
+  .about-me__profile {
+    gap: 40px;
+    margin-bottom: 70px;
+    flex-direction: column-reverse;
+  }
+
+  .about-me__subheading {
+    margin: 0 0 20px;
+    font: 400 30px/38px 'Inter', sans-serif;
+  }
+
+  .about-me__prof {
+    font: 500 11px/16px 'Inter', sans-serif;
+  }
+
+  .about-me__text {
+    font: 400 11px/16px 'Inter', sans-serif;
+    margin-bottom: 40px;
+  }
+
+  .about-me__photo {
+    max-width: 292px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
