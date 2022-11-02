@@ -5,13 +5,15 @@ const Button = ({
                   className = '',
                   onClick,
                   children,
-                  type = 'button'
+                  type = 'button',
+                  disabled
                 }) => {
   return (
     <button
       className={`button ${className}`}
       onClick={onClick}
       type={type}
+      disabled={disabled}
     >
       {children}
     </button>

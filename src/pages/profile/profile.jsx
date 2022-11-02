@@ -1,12 +1,9 @@
 import './profile.css';
 import {Header} from '../../components/Header/Header';
-import {Footer} from '../../components/Footer/Footer';
 import {MyInput} from '../../components/UI/MyInput/MyInput';
 import {useEffect, useState} from 'react';
 import Button from '../../components/UI/Button/Button';
-import {Link, useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {switchLogin} from '../../store/userSlice';
+import {useNavigate} from 'react-router-dom';
 import {useFormAndValidation} from '../../hooks/useFormAndValidation';
 
 export const ProfilePage = () => {
@@ -15,7 +12,6 @@ export const ProfilePage = () => {
     email: 'pochta@yandex.ru',
   }
 
-  const dispatch = useDispatch();
   const history = useNavigate();
   const {values, handleChange, errors, isValid, setValues } = useFormAndValidation();
   const [isEditable, setIsEditable] = useState(false);
@@ -41,7 +37,6 @@ export const ProfilePage = () => {
 
   function handleSignOut(e) {
     e.preventDefault();
-    dispatch(switchLogin());
     history('/');
   }
 

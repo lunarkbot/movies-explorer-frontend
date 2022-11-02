@@ -4,8 +4,14 @@ import {Footer} from '../../components/Footer/Footer';
 import {SearchForm} from '../../components/SearchForm/SearchForm';
 import {MoviesCardList} from '../../components/MoviesCardList/MoviesCardList';
 import Button from '../../components/UI/Button/Button';
+import {useContext} from 'react';
+import {CurrentUserContext} from '../../context/currentUserContext';
 
 export const MoviesPage = () => {
+  const currentUser = useContext(CurrentUserContext);
+
+  console.log(currentUser);
+
   return (
     <div className="movies">
       <Header />
