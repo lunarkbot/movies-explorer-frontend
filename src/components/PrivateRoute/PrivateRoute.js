@@ -6,7 +6,7 @@ const PrivateRoute = () => {
   const { currentUser } = useContext(CurrentUserContext);
 
   return (
-    currentUser.isLoggedIn ? <Outlet /> : <Navigate to={'/signin'} />
+    currentUser.isLoggedIn ? <Outlet /> : <Navigate to={'/'} />
   );
 };
 
