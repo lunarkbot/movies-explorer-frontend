@@ -40,7 +40,11 @@ export const SignInPage = () => {
       .catch(err => {
         if (err.status === 401) {
           showError('Вы ввели неправильный логин или пароль.');
-        } else {
+        } else if (err.status === 500) {
+          showError('На сервере произошла ошибка.');
+        } else if (err.status === 404) {
+          showError('Страница по указанному маршруту не найдена.');
+        }  else {
           showError('При авторизации произошла ошибка.');
         }
       })

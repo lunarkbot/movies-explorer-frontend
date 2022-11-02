@@ -41,6 +41,27 @@ class MainApi extends Api {
       }
     );
   }
+
+  updateUser(data) {
+    return this._request(
+      `${this._baseUrl}/users/me`,
+      {
+        ...this._options,
+        method: 'PATCH',
+        body: JSON.stringify(data),
+      }
+    );
+  }
+
+  signOut() {
+    return this._request(
+      `${this._baseUrl}/signout`,
+      {
+        ...this._options,
+        method: 'GET',
+      }
+    );
+  }
 };
 
 export const mainApi = new MainApi({

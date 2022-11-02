@@ -50,7 +50,11 @@ export const SignUpPage = () => {
       .catch((err) => {
         if (err.status === 409) {
           showError('Пользователь с таким email уже существует.');
-        } else {
+        } else if (err.status === 500) {
+          showError('На сервере произошла ошибка.');
+        } else if (err.status === 404) {
+          showError('Страница по указанному маршруту не найдена.');
+        }  else {
           showError('При регистрации пользователя произошла ошибка.');
         }
       })

@@ -44,13 +44,16 @@ const App = () => {
           <Route path={'/signin'} element={<SignInPage />} />
           <Route path={'/signup'} element={<SignUpPage />} />
           {isChecked &&
-          <Route element={<PrivateRoute />}>
-            <Route path={'/movies'} element={<MoviesPage />} />
-            <Route path={'/saved-movies'} element={<SavedMoviesPage />} />
-            <Route path={'/profile'} element={<ProfilePage />} />
-          </Route>
+            <>
+              <Route element={<PrivateRoute />}>
+                <Route path={'/movies'} element={<MoviesPage />} />
+                <Route path={'/saved-movies'} element={<SavedMoviesPage />} />
+                <Route path={'/profile'} element={<ProfilePage />} />
+              </Route>
+              <Route path={'*'} element={<NotFoundPage />} />
+            </>
           }
-          <Route path={'*'} element={<NotFoundPage />} />
+
         </Routes>
       </BrowserRouter>
     </CurrentUserContext.Provider>
