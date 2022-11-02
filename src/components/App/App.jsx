@@ -11,7 +11,6 @@ import {
   SignUpPage,
 } from '../../pages';
 import {mainApi} from '../../utils/MainApi';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const App = () => {
@@ -31,7 +30,7 @@ const App = () => {
           isLoggedIn: true,
         })
       })
-      .catch((err) => console.log(`Error ${err.status}: ${err.statusText}`))
+      .catch((err) => console.log(`Error ${err.status}: ${err.text}`))
       .finally(() => setIsChecked(true));
   }, [])
 

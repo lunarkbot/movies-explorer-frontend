@@ -8,7 +8,7 @@ export class Api {
     return fetch(url, options).then((res) => {
       return res.ok ? res.json() : Promise.reject({
         status: res.status,
-        text: res.statusText,
+        text: res.text,
       });
     });
   };

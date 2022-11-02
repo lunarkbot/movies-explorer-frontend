@@ -8,9 +8,7 @@ import {useContext} from 'react';
 import {CurrentUserContext} from '../../context/currentUserContext';
 
 export const MoviesPage = () => {
-  const currentUser = useContext(CurrentUserContext);
-
-  console.log(currentUser);
+  const { currentUser } = useContext(CurrentUserContext);
 
   return (
     <div className="movies">

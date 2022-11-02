@@ -76,7 +76,7 @@ export const ProfilePage = () => {
         })
         history('/');
       })
-      .catch((err) => console.log(err.statusText));
+      .catch((err) => console.log(err.text));
   }
 
   return (

@@ -44,7 +44,7 @@ export const SignUpPage = () => {
             navigate('/movies');
           })
           .catch((err) => {
-            showError(err.statusText);
+            showError(err.text);
           })
       })
       .catch((err) => {
