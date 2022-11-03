@@ -4,35 +4,21 @@ import {Footer} from '../../components/Footer/Footer';
 import {SearchForm} from '../../components/SearchForm/SearchForm';
 import {MoviesCardList} from '../../components/MoviesCardList/MoviesCardList';
 import Button from '../../components/UI/Button/Button';
-import {useContext, useEffect, useState} from 'react';
-import {CurrentUserContext} from '../../context/currentUserContext';
+import {useEffect, useState} from 'react';
 import {moviesApi} from '../../utils/MoviesApi';
 import {useMovies} from '../../hooks/useMovies';
 import {SearchErrors} from '../../components/SearchErrors/SearchErrors';
 import {getFilteredMovies} from '../../utils';
 import {mainApi} from '../../utils/MainApi';
+import {useCheckbox} from '../../hooks/useCheckbox';
 
 export const MoviesPage = () => {
-  const { currentUser } = useContext(CurrentUserContext);
   const { movies, isMore, getFirst, getNext } = useMovies();
   const [ searchValue, setSearchValue ] = useState('');
   const [ searchAll, setSearchAll ] = useState(false);
   const [ error, setError ] = useState('');
   const [ idList, setIdList ] = useState([]);
-
-  useEffect(() => {
-    if (localStorage.getItem('checkbox')) {
-      setSearchAll(Boolean(localStorage.getItem('checkbox')))
-    }
-  }, [setSearchAll]);
-
-  useEffect(() => {
-    if (searchAll) {
-      localStorage.setItem('checkbox', 'true');
-    } else {
-      localStorage.removeItem('checkbox');
-    }
-  }, [searchAll]);
+  useCheckbox(searchAll, setSearchAll);
 
   useEffect(() => {
     mainApi.getMovies()

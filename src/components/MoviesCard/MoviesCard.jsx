@@ -3,16 +3,21 @@ import {IMAGES_URL} from '../../constants';
 import {useState} from 'react';
 import {mainApi} from '../../utils/MainApi';
 
-export const MoviesCard = ({ card, isSavedMovies = false, isSaved }) => {
+export const MoviesCard = ({ card, isSavedMovies = false, isSaved, handleRemove }) => {
   console.log(card)
 
   const [isSavedCard, setIsSavedCard] = useState(isSaved)
   console.log(typeof  card.movieId)
   function handleClick(e) {
     if (isSavedMovies || isSavedCard) {
-      mainApi.deleteMovie(card.id)
+      const id = card.id || card.movieId;
+      mainApi.deleteMovie(id)
         .then((card) => {
-          setIsSavedCard(false);
+          if (isSavedMovies) {
+            handleRemove(id);
+          } else {
+            setIsSavedCard(false);
+          }
         })
         .catch((err) => {
           console.log(err)
