@@ -11,13 +11,15 @@ import {SearchErrors} from '../../components/SearchErrors/SearchErrors';
 import {getFilteredMovies} from '../../utils';
 import {mainApi} from '../../utils/MainApi';
 import {useCheckbox} from '../../hooks/useCheckbox';
+import Preloader from '../../components/Preloader/Preloader';
 
 export const MoviesPage = () => {
   const { movies, isMore, getFirst, getNext } = useMovies();
-  const [ searchValue, setSearchValue ] = useState('');
+  const [ searchValue, setSearchValue ] = useState(sessionStorage.getItem('searchValue') || '');
   const [ searchAll, setSearchAll ] = useState(false);
   const [ error, setError ] = useState('');
   const [ idList, setIdList ] = useState([]);
+  const [ isPending, setIsPending ] = useState(false);
   useCheckbox(searchAll, setSearchAll);
 
   useEffect(() => {
@@ -32,8 +34,12 @@ export const MoviesPage = () => {
   }, [movies])
 
   useEffect(() => {
-    console.log(idList)
-  }, [idList])
+    recoverFromStore();
+  }, [searchAll])
+
+  useEffect(() => {
+    recoverFromStore();
+  }, [])
 
   function handleCheckbox(e) {
     setSearchAll(!searchAll);
@@ -43,13 +49,7 @@ export const MoviesPage = () => {
     setSearchValue(e.target.value);
   }
 
-  function handleSubmmit(e) {
-    e.preventDefault();
-    if (!searchValue) {
-      setError('Нужно ввести ключевое слово.');
-      return;
-    }
-
+  function recoverFromStore() {
     if (sessionStorage.getItem('movies')) {
       const result = getFilteredMovies(JSON.parse(sessionStorage.getItem('movies')), searchValue, searchAll);
 
@@ -59,7 +59,24 @@ export const MoviesPage = () => {
         getFirst(result);
         setError('');
       }
+
+      return true;
     } else {
+      return false;
+    }
+  }
+
+  function handleSubmmit(e) {
+    e.preventDefault();
+    if (!searchValue) {
+      setError('Нужно ввести ключевое слово.');
+      return;
+    }
+
+    sessionStorage.setItem('searchValue', searchValue);
+
+    if (!recoverFromStore()) {
+      setIsPending(true);
       moviesApi.getMovies()
         .then((movies) => {
           const result = getFilteredMovies(movies, searchValue, searchAll);
@@ -75,6 +92,9 @@ export const MoviesPage = () => {
         .catch(() => {
           setError(`Во время запроса произошла ошибка. Возможно, 
           проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.`);
+        })
+        .finally(() => {
+          setIsPending(false);
         })
     }
   }
@@ -92,6 +112,7 @@ export const MoviesPage = () => {
         />
         {error ? <SearchErrors>{ error }</SearchErrors> : <MoviesCardList movies={movies} idList={idList} />}
         <div className="movies__more-wrap">
+          {isPending && <Preloader />}
           {(isMore && !error) && <Button
             type="button"
             title="Загрузить еще"

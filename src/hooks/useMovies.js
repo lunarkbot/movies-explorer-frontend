@@ -12,7 +12,7 @@ export function useMovies() {
   useEffect(() => {
     if (pageSize.desktop) setNumOfMovies(3);
     else if (pageSize.tablet) setNumOfMovies(2);
-    else setNumOfMovies(1);
+    else if (pageSize.mobile) setNumOfMovies(1);
   }, [pageSize])
 
   useEffect(() => {

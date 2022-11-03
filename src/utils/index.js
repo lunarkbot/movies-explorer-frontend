@@ -15,3 +15,10 @@ export function getFilteredMovies(data, query, short) {
     );
   })
 }
+
+export function getTime(time) {
+  const hours = Math.floor(time/60);
+  const minutes = time - hours*60;
+
+  return `${hours}ч ${String(minutes).padStart(2, '0')}м`;
+}

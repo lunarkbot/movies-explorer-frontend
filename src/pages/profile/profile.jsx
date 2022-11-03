@@ -46,7 +46,7 @@ export const ProfilePage = () => {
           name: user.name,
           email: user.email,
         })
-
+        showError('Данные успешно обновлены.');
         setIsEditable(false)
       })
       .catch((err) => {
@@ -69,8 +69,13 @@ export const ProfilePage = () => {
 
   function handleSignOut(e) {
     e.preventDefault();
+
     mainApi.signOut()
       .then(() => {
+        sessionStorage.removeItem('searchValue');
+        sessionStorage.removeItem('movies');
+        sessionStorage.removeItem('checkbox');
+
         setCurrentUser({
           isLoggedIn: false,
         })
@@ -136,12 +141,17 @@ export const ProfilePage = () => {
           {isEditable ? <Button
                           type="submit"
                           className="profile__button-save"
-                          disabled={!(isValid && !isPending)}
+                          disabled={!(isValid
+                                        && !isPending
+                                        && (currentUser.email !== values.email
+                                        || currentUser.name !== values.name))}
                         >
                           <ErrorMessage>{ error }</ErrorMessage>
                           Сохранить</Button>
                       : <>
-                          <Button className="profile__button" onClick={handleEdit}>Редактировать</Button>
+                          <Button className="profile__button" onClick={handleEdit}>
+                            <ErrorMessage>{ error }</ErrorMessage>
+                            Редактировать</Button>
                           <Button
                             className="profile__button-signout"
                             onClick={handleSignOut}

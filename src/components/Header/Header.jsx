@@ -16,7 +16,6 @@ export const Header = () => {
 
   function handleHamburgerClick() {
     setIsOpen(!isOpen);
-    console.log(isOpen)
   }
 
   function handleSignInClick () {

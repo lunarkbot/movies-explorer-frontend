@@ -1,7 +1,12 @@
 .movies-card {
+  position: relative;
+}
+
+.movies-card__content {
   display: grid;
   background-color: var(--background-fourth);
   grid-template-columns: 1fr 58px;
+  text-decoration: none;
 }
 
 .movies-card__title {
@@ -23,14 +28,6 @@
   grid-row: 2/3;
 }
 
-.movies-card__ico-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-column: 2/3;
-  grid-row: 1/3;
-}
-
 .movies-card__img {
   display: block;
   width: 100%;
@@ -49,6 +46,10 @@
   background-size: cover;
   border: 0;
   cursor: pointer;
+  z-index: 1;
+  position: absolute;
+  top: 19px;
+  right: 14px;
 }
 
 .movies-card__ico-favorites {

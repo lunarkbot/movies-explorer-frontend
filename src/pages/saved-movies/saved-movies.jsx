@@ -8,15 +8,18 @@ import {mainApi} from '../../utils/MainApi';
 import {SearchErrors} from '../../components/SearchErrors/SearchErrors';
 import {getFilteredMovies} from '../../utils';
 import {useCheckbox} from '../../hooks/useCheckbox';
+import Preloader from '../../components/Preloader/Preloader';
 
 export const SavedMoviesPage = () => {
   const [ error, setError ] = useState('');
   const [ movies, setMovies ] = useState();
   const [ searchValue, setSearchValue ] = useState('');
   const [ searchAll, setSearchAll ] = useState(false);
+  const [ isPending, setIsPending ] = useState(false);
   useCheckbox(searchAll, setSearchAll);
 
   useEffect(() => {
+    setIsPending(true)
     mainApi.getMovies()
       .then((res) => {
         setMovies(res);
@@ -25,6 +28,9 @@ export const SavedMoviesPage = () => {
       .catch(() => {
         setError(`Во время запроса произошла ошибка. Возможно, 
         проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.`);
+      })
+      .finally(() => {
+        setIsPending(false)
       })
   }, [])
 
@@ -48,7 +54,7 @@ export const SavedMoviesPage = () => {
       setError('Нужно ввести ключевое слово.');
       return;
     }
-
+    setIsPending(true)
     mainApi.getMovies()
       .then((res) => {
         if (res.length === 0) {
@@ -61,6 +67,9 @@ export const SavedMoviesPage = () => {
       .catch((err) => {
         setError(`Во время запроса произошла ошибка. Возможно, 
         проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.`);
+      })
+      .finally(() => {
+        setIsPending(false)
       })
   }
 
@@ -78,6 +87,9 @@ export const SavedMoviesPage = () => {
         {error
           ? <SearchErrors>{ error }</SearchErrors>
           : <MoviesCardList movies={movies} isSavedMovies={true} handleRemove={handleRemove} />}
+        <div className="movies__more-wrap">
+          {isPending && <Preloader />}
+        </div>
       </main>
       <Footer />
     </div>
