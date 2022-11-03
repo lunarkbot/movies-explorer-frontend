@@ -1,13 +1,13 @@
 import {Api} from './Api';
-import { API_MAIN_URL, API_OPTIONS } from '../constants';
+import { API_MAIN_URL, MAIN_API_OPTIONS } from '../constants';
 
 class MainApi extends Api {
   constructor({ baseUrl, options }) {
     super({ baseUrl, options });
   }
 
-  _request(url, options) {
-    return super._request(url, options);
+  _request(url, reqOptions) {
+    return super._request(url, reqOptions);
   }
 
   signUp(data) {
@@ -66,5 +66,5 @@ class MainApi extends Api {
 
 export const mainApi = new MainApi({
   baseUrl: API_MAIN_URL,
-  options: API_OPTIONS,
+  options: MAIN_API_OPTIONS,
 });

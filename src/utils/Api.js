@@ -4,8 +4,8 @@ export class Api {
     this._options = options;
   }
 
-  _request(url, options) {
-    return fetch(url, options).then((res) => {
+  _request(url, reqOptions) {
+    return fetch(url, reqOptions).then((res) => {
       return res.ok ? res.json() : Promise.reject({
         status: res.status,
         text: res.statusText,

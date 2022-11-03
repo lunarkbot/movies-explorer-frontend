@@ -18,6 +18,12 @@ export const SignInPage = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
+    if (currentUser.isLoggedIn) {
+      navigate('/');
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     setValues({
       email: '',
       password: '',

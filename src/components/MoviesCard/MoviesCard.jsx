@@ -1,6 +1,8 @@
 import './MoviesCard.css';
+import {IMAGES_URL} from '../../constants';
 
 export const MoviesCard = ({ card, isSavedMovies = false, isSaved }) => {
+  console.log(card)
   return (
     <li className="movies-card">
       <p className="movies-card__title">{ card.nameRU }</p>
@@ -17,7 +19,11 @@ export const MoviesCard = ({ card, isSavedMovies = false, isSaved }) => {
           `}
         ></button>
       </div>
-      <img src={ card.thumbnail } alt={ card.nameRU } className="movies-card__img" />
+      <img
+        src={ IMAGES_URL + card.image.formats.thumbnail.url }
+        alt={ card.nameRU }
+        className="movies-card__img"
+      />
     </li>
   );
 };

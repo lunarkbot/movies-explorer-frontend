@@ -18,6 +18,12 @@ export const SignUpPage = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
+    if (currentUser.isLoggedIn) {
+      navigate('/');
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     setValues({
       name: '',
       email: '',
