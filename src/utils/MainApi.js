@@ -62,6 +62,37 @@ class MainApi extends Api {
       }
     );
   }
+
+  deleteMovie(id) {
+    return this._request(
+      `${this._baseUrl}/movies/${id}`,
+      {
+        ...this._options,
+        method: 'DELETE',
+      }
+    );
+  }
+
+  addMovie(data) {
+    return this._request(
+      `${this._baseUrl}/movies`,
+      {
+        ...this._options,
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
+  }
+
+  getMovies() {
+    return this._request(
+      `${this._baseUrl}/movies`,
+      {
+        ...this._options,
+        method: 'GET',
+      }
+    );
+  }
 };
 
 export const mainApi = new MainApi({

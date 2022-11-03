@@ -10,6 +10,7 @@ import {moviesApi} from '../../utils/MoviesApi';
 import {useMovies} from '../../hooks/useMovies';
 import {SearchErrors} from '../../components/SearchErrors/SearchErrors';
 import {getFilteredMovies} from '../../utils';
+import {mainApi} from '../../utils/MainApi';
 
 export const MoviesPage = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -17,6 +18,7 @@ export const MoviesPage = () => {
   const [ searchValue, setSearchValue ] = useState('');
   const [ searchAll, setSearchAll ] = useState(false);
   const [ error, setError ] = useState('');
+  const [ idList, setIdList ] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem('checkbox')) {
@@ -31,6 +33,21 @@ export const MoviesPage = () => {
       localStorage.removeItem('checkbox');
     }
   }, [searchAll]);
+
+  useEffect(() => {
+    mainApi.getMovies()
+      .then((res) => {
+        setIdList([
+          ...res.reduce((acc, item) => {
+            return [...acc, item.movieId]
+          }, []),
+        ])
+      })
+  }, [movies])
+
+  useEffect(() => {
+    console.log(idList)
+  }, [idList])
 
   function handleCheckbox(e) {
     setSearchAll(!searchAll);
@@ -87,7 +104,7 @@ export const MoviesPage = () => {
           handleChange={handleChange}
           value={searchValue}
         />
-        {error ? <SearchErrors>{ error }</SearchErrors> : <MoviesCardList movies={movies} />}
+        {error ? <SearchErrors>{ error }</SearchErrors> : <MoviesCardList movies={movies} idList={idList} />}
         <div className="movies__more-wrap">
           {(isMore && !error) && <Button
             type="button"

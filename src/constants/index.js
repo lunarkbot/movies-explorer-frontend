@@ -9,4 +9,4 @@ export const MOVIES_API_OPTIONS = {
 };
 export const API_MAIN_URL = 'http://localhost:3000/api';
 export const API_MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-export const IMAGES_URL = 'https://api.nomoreparties.co/';
+export const IMAGES_URL = 'https://api.nomoreparties.co';
