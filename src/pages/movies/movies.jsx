@@ -19,6 +19,7 @@ export const MoviesPage = () => {
   const [ searchAll, setSearchAll ] = useState(false);
   const [ error, setError ] = useState('');
   const [ idList, setIdList ] = useState([]);
+  const [ idChecked, setIdChecked ] = useState(false);
   const [ isPending, setIsPending ] = useState(false);
   useCheckbox(searchAll, setSearchAll);
 
@@ -30,6 +31,9 @@ export const MoviesPage = () => {
             return [...acc, item.movieId]
           }, []),
         ])
+      })
+      .finally(() => {
+        setIdChecked(true);
       })
   }, [movies])
 
@@ -110,7 +114,7 @@ export const MoviesPage = () => {
           handleChange={handleChange}
           value={searchValue}
         />
-        {error ? <SearchErrors>{ error }</SearchErrors> : <MoviesCardList movies={movies} idList={idList} />}
+        {error ? <SearchErrors>{ error }</SearchErrors> : idChecked && <MoviesCardList movies={movies} idList={idList} />}
         <div className="movies__more-wrap">
           {isPending && <Preloader />}
           {(isMore && !error) && <Button
