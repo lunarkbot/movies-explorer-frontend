@@ -1,9 +1,10 @@
-# Figma
-Download: https://disk.yandex.ru/d/cxMV18w2LnSrVQ
+# Links
+* Download layout: https://disk.yandex.ru/d/cxMV18w2LnSrVQ
+* Open layout (online version): https://www.figma.com/proto/GQPmgK9cQ9JZW7bBXPQJu9/Diploma-(Copy)?node-id=932%3A2618
+* Pull request: https://github.com/lunarkbot/movies-explorer-frontend/pull/2
+* Backend: https://api.kbot.nomoredomains.icu/api/
+* Frontend: https://web.kbot.nomoredomains.icu/
 
-Or just open: https://www.figma.com/proto/GQPmgK9cQ9JZW7bBXPQJu9/Diploma-(Copy)?node-id=932%3A2618
-
-Pull request: https://github.com/lunarkbot/movies-explorer-frontend/pull/2
 
 # Getting Started with Create React App
 
