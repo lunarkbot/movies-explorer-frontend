@@ -1,6 +1,5 @@
 import './MoviesCardList.css';
 import {MoviesCard} from '../MoviesCard/MoviesCard';
-import {isLabelWithInternallyDisabledControl} from '@testing-library/user-event/dist/utils';
 
 export const MoviesCardList = ({
                                  movies = [],

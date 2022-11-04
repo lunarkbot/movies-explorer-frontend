@@ -1,8 +1,10 @@
+import {MAX_SHORT_MOVIE_LENGTH} from '../constants';
+
 export function getFilteredMovies(data, query, short) {
   const str = query.toLowerCase();
 
   if (!short) data = data.filter((item) => {
-    return item.duration > 40;
+    return item.duration > MAX_SHORT_MOVIE_LENGTH;
   });
 
   return data.filter((item) => {
