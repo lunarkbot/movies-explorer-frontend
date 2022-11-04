@@ -115,6 +115,7 @@ export const ProfilePage = () => {
                   <input
                     type="email"
                     name="email"
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$"
                     onInput={handleChange}
                     onFocus={handleFocus}
                     onBlur={handleFocus}

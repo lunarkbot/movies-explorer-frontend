@@ -86,6 +86,7 @@ export const SignUpPage = () => {
           type="email"
           name="email"
           placeholder="E-mail"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$"
           handler={handleChange}
           min="2"
           max="30"

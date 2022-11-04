@@ -66,6 +66,7 @@ export const SignInPage = () => {
           type="email"
           name="email"
           placeholder="E-mail"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$"
           value={values.email}
           handler={handleChange}
           min="2"
