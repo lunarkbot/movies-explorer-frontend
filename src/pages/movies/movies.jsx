@@ -12,13 +12,14 @@ import {getFilteredMovies} from '../../utils';
 import {mainApi} from '../../utils/MainApi';
 import {useCheckbox} from '../../hooks/useCheckbox';
 import Preloader from '../../components/Preloader/Preloader';
+import {useMoviesList} from '../../hooks/useMoviesList';
 
 export const MoviesPage = () => {
   const { movies, isMore, getFirst, getNext } = useMovies();
   const [ searchValue, setSearchValue ] = useState(sessionStorage.getItem('searchValue') || '');
   const [ searchAll, setSearchAll ] = useState(false);
   const [ error, setError ] = useState('');
-  const [ idList, setIdList ] = useState([]);
+  const { idList, getDbId, updateList } = useMoviesList();
   const [ idChecked, setIdChecked ] = useState(false);
   const [ isPending, setIsPending ] = useState(false);
   useCheckbox(searchAll, setSearchAll);
@@ -26,11 +27,7 @@ export const MoviesPage = () => {
   useEffect(() => {
     mainApi.getMovies()
       .then((res) => {
-        setIdList([
-          ...res.reduce((acc, item) => {
-            return [...acc, item.movieId]
-          }, []),
-        ])
+        updateList(res);
       })
       .finally(() => {
         setIdChecked(true);
@@ -114,7 +111,9 @@ export const MoviesPage = () => {
           handleChange={handleChange}
           value={searchValue}
         />
-        {error ? <SearchErrors>{ error }</SearchErrors> : idChecked && <MoviesCardList movies={movies} idList={idList} />}
+        {error
+          ? <SearchErrors>{ error }</SearchErrors>
+          : idChecked && <MoviesCardList movies={movies} idList={idList} getDbId={getDbId} />}
         <div className="movies__more-wrap">
           {isPending && <Preloader />}
           {(isMore && !error) && <Button

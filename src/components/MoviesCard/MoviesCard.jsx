@@ -4,13 +4,20 @@ import {useState} from 'react';
 import {mainApi} from '../../utils/MainApi';
 import {getTime} from '../../utils';
 
-export const MoviesCard = ({ card, isSavedMovies = false, isSaved, handleRemove }) => {
+export const MoviesCard = ({
+                             card,
+                             isSavedMovies = false,
+                             isSaved,
+                             handleRemove,
+                             getDbId,
+                          }) => {
   const [isSavedCard, setIsSavedCard] = useState(isSaved)
 
   function handleClick(e) {
     if (isSavedMovies || isSavedCard) {
       const id = card.id || card.movieId;
-      mainApi.deleteMovie(id)
+      const dbId = getDbId(card.id || card.movieId);
+      mainApi.deleteMovie(dbId)
         .then((card) => {
           if (isSavedMovies) {
             handleRemove(id);

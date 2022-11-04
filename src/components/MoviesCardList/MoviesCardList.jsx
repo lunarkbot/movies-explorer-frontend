@@ -4,7 +4,8 @@ import {MoviesCard} from '../MoviesCard/MoviesCard';
 export const MoviesCardList = ({
                                  movies = [],
                                  isSavedMovies = false,
-                                 idList = [],
+                                 idList,
+                                 getDbId,
                                  handleRemove,
                               }) => {
   return (
@@ -15,6 +16,7 @@ export const MoviesCardList = ({
             key={item.id || item.movieId}
             isSavedMovies={isSavedMovies}
             isSaved={idList.includes(item.id)}
+            getDbId={getDbId}
             handleRemove={handleRemove}
           />;
       })}

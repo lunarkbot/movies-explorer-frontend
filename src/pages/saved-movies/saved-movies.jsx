@@ -9,19 +9,23 @@ import {SearchErrors} from '../../components/SearchErrors/SearchErrors';
 import {getFilteredMovies} from '../../utils';
 import {useCheckbox} from '../../hooks/useCheckbox';
 import Preloader from '../../components/Preloader/Preloader';
+import {useMoviesList} from '../../hooks/useMoviesList';
 
 export const SavedMoviesPage = () => {
   const [ error, setError ] = useState('');
   const [ movies, setMovies ] = useState();
   const [ searchValue, setSearchValue ] = useState('');
   const [ searchAll, setSearchAll ] = useState(false);
+  const [ idChecked, setIdChecked ] = useState(false);
   const [ isPending, setIsPending ] = useState(false);
+  const { idList, getDbId, updateList } = useMoviesList();
   useCheckbox(searchAll, setSearchAll);
 
   useEffect(() => {
     setIsPending(true)
     mainApi.getMovies()
       .then((res) => {
+        updateList(res);
         setMovies(res);
         setError('');
       })
@@ -30,7 +34,8 @@ export const SavedMoviesPage = () => {
         проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.`);
       })
       .finally(() => {
-        setIsPending(false)
+        setIsPending(false);
+        setIdChecked(true);
       })
   }, [])
 
@@ -86,7 +91,13 @@ export const SavedMoviesPage = () => {
         />
         {error
           ? <SearchErrors>{ error }</SearchErrors>
-          : <MoviesCardList movies={movies} isSavedMovies={true} handleRemove={handleRemove} />}
+          : idChecked && <MoviesCardList
+              movies={movies}
+              isSavedMovies={true}
+              idList={idList}
+              getDbId={getDbId}
+              handleRemove={handleRemove}
+          />}
         <div className="movies__more-wrap">
           {isPending && <Preloader />}
         </div>
