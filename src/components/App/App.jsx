@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { CurrentUserContext } from '../../context/currentUserContext';
 import {
   SignInPage,
@@ -17,7 +17,6 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({
     isLoggedIn: false,
   });
-
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
@@ -30,7 +29,20 @@ const App = () => {
           isLoggedIn: true,
         })
       })
-      .catch((err) => console.log(`Error ${err.status}: ${err.text}`))
+      .catch((err) => {
+        setCurrentUser({
+          id: '',
+          name: '',
+          email: '',
+          isLoggedIn: false,
+        })
+
+        sessionStorage.removeItem('searchValue');
+        sessionStorage.removeItem('movies');
+        sessionStorage.removeItem('checkbox');
+
+        console.log(`Error ${err.status}: ${err.text}`)
+      })
       .finally(() => setIsChecked(true));
   }, [])
 
