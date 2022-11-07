@@ -2,23 +2,69 @@ import './signup.css';
 import Logo from '../../components/UI/Logo/Logo';
 import {MyInput} from '../../components/UI/MyInput/MyInput';
 import Button from '../../components/UI/Button/Button';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useFormAndValidation} from '../../hooks/useFormAndValidation';
-import {useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import {ErrorMessage} from '../../components/UI/Error/ErrorMessage';
+import {mainApi} from '../../utils/MainApi';
+import {useFormError} from '../../hooks/useFormError';
+import {CurrentUserContext} from '../../context/currentUserContext';
 
 export const SignUpPage = () => {
   const {values, handleChange, errors, isValid, setValues, resetForm } = useFormAndValidation();
+  const {error, showError} = useFormError();
+  const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    if (currentUser.isLoggedIn) {
+      navigate('/');
+    }
+  }, [currentUser])
 
   useEffect(() => {
     setValues({
-      name: 'Виталий',
-      email: 'pochta@yandex.ru',
-      password: 'password',
+      name: '',
+      email: '',
+      password: '',
     });
   }, [setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsPending(true);
+    mainApi.signUp(values)
+      .then(() => {
+        mainApi.signIn({
+          email: values.email,
+          password: values.password,
+        })
+          .then((user) => {
+            setCurrentUser({
+              id: user._id,
+              name: user.name,
+              email: user.email,
+              isLoggedIn: true,
+            });
+            navigate('/movies');
+          })
+          .catch((err) => {
+            showError(err.text);
+          })
+      })
+      .catch((err) => {
+        if (err.status === 409) {
+          showError('Пользователь с таким email уже существует.');
+        } else if (err.status === 500) {
+          showError('На сервере произошла ошибка.');
+        } else if (err.status === 404) {
+          showError('Страница по указанному маршруту не найдена.');
+        }  else {
+          showError('При регистрации пользователя произошла ошибка.');
+        }
+      })
+      .finally(() => setIsPending(false));
   }
 
   return (
@@ -30,14 +76,17 @@ export const SignUpPage = () => {
           name="name"
           placeholder="Имя"
           handler={handleChange}
+          pattern="[A-Za-z А-Яа-яёЁ]{2,30}"
           min="2"
           max="30"
           errorText={errors.name}
           value={values.name}
         />
         <MyInput
+          type="email"
           name="email"
           placeholder="E-mail"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$"
           handler={handleChange}
           min="2"
           max="30"
@@ -58,7 +107,9 @@ export const SignUpPage = () => {
         <Button
           type="submit"
           className="signup__button"
+          disabled={!(isValid && !isPending)}
         >
+          <ErrorMessage>{ error }</ErrorMessage>
           Зарегистрироваться
         </Button>
         <div className="signup__text">

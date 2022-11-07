@@ -11,6 +11,7 @@ export const MyInput = ({
                         max,
                         required = true,
                         errorText = '',
+                        pattern,
                       }) => {
 
   return (
@@ -24,6 +25,7 @@ export const MyInput = ({
         minLength={min}
         maxLength={max}
         required={required}
+        pattern={pattern}
         className={`my-input__input ${errorText && 'my-input__input_has-error'}`}
       />
       {errorText && <span className="my-input__error">{errorText}</span>}

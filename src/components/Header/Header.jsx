@@ -1,28 +1,24 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './Header.css';
 import Logo from '../UI/Logo/Logo';
 import Navigation from '../Navigation/Navigation';
-import { switchLogin } from '../../store/userSlice';
-import {useDispatch, useSelector} from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import Hamburger from '../UI/Hamburger/Hamburger';
+import {CurrentUserContext} from '../../context/currentUserContext';
 
 export const Header = () => {
-  const { isLoggedIn } = useSelector(state => state.user);
+  const { currentUser } = useContext(CurrentUserContext);
 
-  const dispatch = useDispatch();
   const history = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
 
   function handleHamburgerClick() {
     setIsOpen(!isOpen);
-    console.log(isOpen)
   }
 
   function handleSignInClick () {
-    //dispatch(switchLogin());
     history('/signin');
   }
 
@@ -32,9 +28,9 @@ export const Header = () => {
 
   return (
     <header className="header">
-      <div className={`header__content ${isLoggedIn && 'header__content_logged-in'}`}>
+      <div className={`header__content ${currentUser.isLoggedIn && 'header__content_logged-in'}`}>
         <Logo />
-          {isLoggedIn ? (<>
+          {currentUser.isLoggedIn ? (<>
             <div className={`header__menu ${isOpen && 'header__menu_active'}`}>
               <Navigation />
               <Button

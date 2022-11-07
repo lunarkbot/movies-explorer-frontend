@@ -1,37 +1,65 @@
 import './profile.css';
 import {Header} from '../../components/Header/Header';
-import {Footer} from '../../components/Footer/Footer';
-import {MyInput} from '../../components/UI/MyInput/MyInput';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import Button from '../../components/UI/Button/Button';
-import {Link, useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {switchLogin} from '../../store/userSlice';
+import {useNavigate} from 'react-router-dom';
 import {useFormAndValidation} from '../../hooks/useFormAndValidation';
+import {CurrentUserContext} from '../../context/currentUserContext';
+import {ErrorMessage} from '../../components/UI/Error/ErrorMessage';
+import {mainApi} from '../../utils/MainApi';
+import {useFormError} from '../../hooks/useFormError';
 
 export const ProfilePage = () => {
-  const user = {
-    name: 'Виталий',
-    email: 'pochta@yandex.ru',
-  }
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
-  const dispatch = useDispatch();
   const history = useNavigate();
   const {values, handleChange, errors, isValid, setValues } = useFormAndValidation();
   const [isEditable, setIsEditable] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const {error, showError} = useFormError();
+  const [focus, setFocus] = useState({
+    email: false,
+    name: false,
+  });
+
+  function handleFocus(e) {
+    setFocus({
+      ...focus,
+      [e.target.name]: !focus[e.target.name],
+    });
+  }
 
   useEffect(() => {
     setValues({
-      email: 'pochta@yandex.ru',
-      name: 'Виталий',
+      email: currentUser.email,
+      name: currentUser.name,
     });
   }, [setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (isValid) {
-      setIsEditable(false);
-    }
+
+    mainApi.updateUser(values)
+      .then((user) => {
+        setCurrentUser({
+          ...currentUser,
+          name: user.name,
+          email: user.email,
+        })
+        showError('Данные успешно обновлены.');
+        setIsEditable(false)
+      })
+      .catch((err) => {
+        if (err.status === 409) {
+          showError('Пользователь с таким email уже существует.');
+        } else if (err.status === 500) {
+          showError('На сервере произошла ошибка.');
+        } else if (err.status === 404) {
+          showError('Страница по указанному маршруту не найдена.');
+        } else {
+          showError('При обновлении профиля произошла ошибка.');
+        }
+      })
   }
 
   function handleEdit(e) {
@@ -41,52 +69,97 @@ export const ProfilePage = () => {
 
   function handleSignOut(e) {
     e.preventDefault();
-    dispatch(switchLogin());
-    history('/');
+
+    mainApi.signOut()
+      .then(() => {
+        sessionStorage.removeItem('searchValue');
+        sessionStorage.removeItem('movies');
+        sessionStorage.removeItem('checkbox');
+
+        setCurrentUser({
+          isLoggedIn: false,
+        })
+        history('/');
+      })
+      .catch((err) => console.log(err.text));
   }
 
   return (
     <div className="profile">
       <Header />
       <form className="profile__content" onSubmit={handleSubmit}>
-        <h1 className="profile__title">Привет, {user.name}!</h1>
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
         {isEditable ?
-          (<div className="profile__inputs-group">
-            <MyInput
-              name="name"
-              placeholder="Имя"
-              handler={handleChange}
-              min="2"
-              max="30"
-              errorText={errors.name}
-              value={values.name}
-            />
-            <MyInput
-              name="email"
-              placeholder="E-mail"
-              handler={handleChange}
-              min="2"
-              max="30"
-              value={values.email}
-              errorText={errors.email}
-            />
+          (<div className="profile__list-wrap">
+            <ul className="profile__list">
+              <li className="profile__list-item">
+                <span className={`${focus.name && 'profile__list-item-focused'}`}>Имя</span>
+                <span>
+                  <input
+                    type="name"
+                    name="name"
+                    onInput={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocus}
+                    minLength="2"
+                    maxLength="30"
+                    pattern="[A-Za-z А-Яа-яёЁ]{2,30}"
+                    value={values.name}
+                    className="profile__list-input"
+                  />
+                </span>
+              </li>
+              <li className="profile__list-item">
+                <span className={`${focus.email && 'profile__list-item-focused'}`}>E-mail</span>
+                <span>
+                  <input
+                    type="email"
+                    name="email"
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$"
+                    onInput={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocus}
+                    value={values.email}
+                    className="profile__list-input"
+                  />
+                </span>
+              </li>
+            </ul>
+            <ErrorMessage>{errors.name || errors.email}</ErrorMessage>
           </div>)
           : (<ul className="profile__list">
                 <li className="profile__list-item">
                   <span>Имя</span>
-                  <span>{user.name}</span>
+                  <span>{currentUser.name}</span>
                 </li>
                 <li className="profile__list-item">
                   <span>E-mail</span>
-                  <span>{user.email}</span>
+                  <span>{currentUser.email}</span>
                 </li>
             </ul>)
         }
         <div className="profile__buttons-group">
-          {isEditable ? <Button type="submit" className="profile__button">Сохранить</Button>
-                      : <Button className="profile__button" onClick={handleEdit}>Редактировать</Button>
+          {isEditable ? <Button
+                          type="submit"
+                          className="profile__button-save"
+                          disabled={!(isValid
+                                        && !isPending
+                                        && (currentUser.email !== values.email
+                                        || currentUser.name !== values.name))}
+                        >
+                          <ErrorMessage>{ error }</ErrorMessage>
+                          Сохранить</Button>
+                      : <>
+                          <Button className="profile__button" onClick={handleEdit}>
+                            <ErrorMessage>{ error }</ErrorMessage>
+                            Редактировать</Button>
+                          <Button
+                            className="profile__button-signout"
+                            onClick={handleSignOut}
+                          >
+                            Выйти из аккаунта</Button>
+                        </>
           }
-          <Button className="profile__button-signout" onClick={handleSignOut}>Выйти из аккаунта</Button>
         </div>
       </form>
     </div>

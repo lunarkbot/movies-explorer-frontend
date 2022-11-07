@@ -21,6 +21,11 @@
   border-radius: 8px;
   padding: 25px 135px 25px 25px;
   font: 400 18px/20px 'Inter', sans-serif;
+  outline: none;
+}
+
+.search-form__input:focus {
+  border-color: var(--input-default);
 }
 
 .search-form__input::placeholder {
